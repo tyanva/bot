@@ -251,6 +251,6 @@ canvas {
 }
 .v-line {
     width:0px;
-    border: 1px solid #1f1f1f;
+    border-left: 1px solid #1f1f1f;
     display: inline-block;
 }
