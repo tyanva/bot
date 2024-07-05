@@ -1,25 +1,24 @@
 // canvas.js
 
 const skins = [
-    { path: './assets/skin_building_1.png', name: 'Basic Skin' },
-    { path: './assets/skin_building_2.png', name: 'Advanced Skin' },
-    { path: './assets/skin_building_3.png', name: 'Pro Skin' },
-    { path: './assets/skin_building_4.png', name: 'Elite Skin' },
+    { path: '../assets/skin_building_1.png', name: 'Basic Skin' },
+    { path: '../assets/skin_building_2.png', name: 'Advanced Skin' },
+    { path: '../assets/skin_building_3.png', name: 'Pro Skin' },
+    { path: '../assets/skin_building_4.png', name: 'Elite Skin' },
 ];
 
 export function initializeCanvas() {
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
-    const cellImage = new Image();
     const buildingImages = [];
+    const cellImage = new Image();
+    cellImage.src = '../assets/cell.png';
     
     skins.forEach(skin => {
         const img = new Image();
         img.src = skin.path;
         buildingImages.push(img);
     });
-
-    cellImage.src = 'assets/cell.png';
 
     const cellSize = 100;
     const gridSize = 5;

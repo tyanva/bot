@@ -19,10 +19,13 @@
     }
 }
 
+html,body {
+    height: 100vh;
+}
 
 body {
     user-select: none;
-    background-image: url(./assets/bg_menu.svg); 
+    background-image: url(assets/bg_menu.svg);
     background-size: cover;  
     background-position: center;
 }
@@ -39,7 +42,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 100vh;
+    height: 100%;
 }
 
 .spacer {
@@ -136,8 +139,9 @@ button:focus {
 }
 
 /* description popup*/
+
 .hover-block {
-    background-color: #60e5da;  
+    display: inline;
     position: relative;
 }
 
@@ -221,4 +225,32 @@ canvas {
     height: 50px;
     margin-right: 10px;
 }
-/* */
+/* upgrade-block */
+.upgrade-block {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 100%;
+}
+.upgrade-block img {
+    width: 30vh;
+    height: 30vh;
+}
+.upgrade-block-header {
+    display: flex;
+    justify-content: center;
+}
+.upgrade-block-btn {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    background-color: #ccc;
+}
+.v-line {
+    width:0px;
+    border: 1px solid #1f1f1f;
+    display: inline-block;
+}

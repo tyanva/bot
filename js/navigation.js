@@ -12,7 +12,7 @@ export function setupMainNav() {
     });
 
     // Load default page
-    loadPage('upgrade');
+    loadPage('build');
 }
 
 function setupTopNav() {
@@ -49,7 +49,7 @@ function loadPage(page) {
 }
 
 function loadTabContent(tab) {
-    fetch(`./sub-page/sub-${tab}.html`)
+    fetch(`sub-${tab}.html`)
         .then(response => response.text())
         .then(html => {
             document.getElementById('tab-content').innerHTML = html;
