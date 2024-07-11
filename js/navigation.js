@@ -1,13 +1,27 @@
 // navigation.js
 
+import {displaySkins} from "./canvas.js";
+
 export function setupMainNav() {
     const buttons = document.querySelectorAll('.nav-btn');
 
     buttons.forEach(button => {
         button.addEventListener('click', () => {
-            buttons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            loadPage(button.id.split('-')[0]);
+        if(button.classList.contains('active')){
+            const popup = document.getElementById('popup');
+            popup.style.display = 'block';
+            document.getElementById('buildButton').style.display = 'block';
+            document.getElementById('freeButton').style.display = 'none';
+            document.getElementById('sellButton').style.display = 'none';
+            document.getElementById('skinList').style.display = 'none';
+            const buildButton = document.getElementById('now');
+            displaySkins();
+} else {
+    buttons.forEach(btn => btn.classList.remove('active'));
+    button.classList.add('active');
+    loadPage(button.id.split('-')[0]);
+
+}
         });
     });
 

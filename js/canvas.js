@@ -125,22 +125,23 @@ export function initializeCanvas() {
         document.getElementById('popup').style.display = 'none';
     });
 
-    function displaySkins() {
-        const skinList = document.getElementById('skinList');
-        skinList.innerHTML = '';
-        skins.forEach((skin, i) => {
-            const skinItem = document.createElement('div');
-            skinItem.className = 'skin-item';
-            skinItem.innerHTML = `<img src="${skin.path}" alt="${skin.name}"><span>${skin.name}</span>`;
-            skinItem.addEventListener('click', () => {
-                selectedSkin = i;
-                document.getElementById('freeButton').click();
-            });
-            skinList.appendChild(skinItem);
+}
+
+export function displaySkins() {
+    const skinList = document.getElementById('skinList');
+    skinList.innerHTML = '';
+    skins.forEach((skin, i) => {
+        const skinItem = document.createElement('div');
+        skinItem.className = 'skin-item';
+        skinItem.innerHTML = `<img src="${skin.path}" alt="${skin.name}"><span>${skin.name}</span>`;
+        skinItem.addEventListener('click', () => {
+            selectedSkin = i;
+            document.getElementById('freeButton').click();
         });
-        document.getElementById('buildButton').style.display = 'none';
-        skinList.style.display = 'block';
-    }
+        skinList.appendChild(skinItem);
+    });
+    document.getElementById('buildButton').style.display = 'none';
+    skinList.style.display = 'block';
 }
 
 // Prevent scroll with multiple touch points
