@@ -7,3 +7,5 @@ document.addEventListener('DOMContentLoaded', () => {
     setupMainNav();
     setupSettings();
 });
+
+window.Telegram.WebApp.isVerticalSwipesEnabled=false;
