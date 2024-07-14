@@ -95,6 +95,7 @@ canvas.addEventListener('mousemove', (e) => {
         const rect = canvas.getBoundingClientRect();
         const scaleX = canvas.width / rect.width;
         const scaleY = canvas.height / rect.height;
+        console.log(scaleX+" - "+scaleY)
         const x = (e.clientX - rect.left) * scaleX;
         const y = (e.clientY - rect.top) * scaleY;
         const col = Math.floor(x / totalCellSize);
@@ -143,7 +144,7 @@ canvas.addEventListener('click', (e) => {
 
             const buildButton = document.getElementById('buildButton');
             buildButton.onclick = () => {
-                window.location.href = './Game/index.html';
+                window.location.href = './game.html';
             };
 
             const freeButton = document.getElementById('freeButton');

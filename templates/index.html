@@ -18,6 +18,7 @@
 </head>
 <body>
     <div class="container">
+        {% if tab == 'city' %}
         <div class="header-bar">
             <div class="energy-container">
                 <img class="energy-icon" src="../static/images/Icons/light.svg" alt="Energy: ">
@@ -47,7 +48,7 @@
         <div class="balance">
             <h2>1 234 420 323 BC</h2>
         </div>
-       
+        {% endif %}
         <main class="main-content">
             {% if tab == 'city' %}
             {% include 'city.html' %}
@@ -67,6 +68,21 @@
             {% endif %}
             
         </main>
+        {% if tab == 'city' %}
+        <div class="footer">
+            <div class="news">
+                <img class="news-icon" src="../static/images/marketplace.png" alt="News!">
+                <div>
+                    <div class="news-title">New arrivals!</div>
+                    <div class="news-sub-title">Marketplace • NFT for sell</div>
+                </div>
+            
+                
+                <a class="arrow" href="/marketplace">
+                    <img src="../static/images/right-arrow.svg" alt=">">
+                </a>
+            </div>
+            {% endif %}
 
         <footer class="footer-menu">
             <a href="/ranking"><img src="../static/images/Icons/ui/rank.svg"  /><span>Ranking</span></a>
@@ -75,7 +91,7 @@
             <a href="/tasks"><img src="../static/images/Icons/ui/tasks.svg"  /><span>Task</span></a>
             <a href="/upgrade"><img src="../static/images/Icons/ui/upgrade.svg"  /><span>Upgrade</span></a>
         </footer>
-    </div>
+    </div>        </div>
 
     <script > 
         document.addEventListener('DOMContentLoaded', () => {
