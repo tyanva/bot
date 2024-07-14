@@ -1,0 +1,17 @@
+body {
+    text-align: center;
+    margin: 0 auto;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    
+        user-select: none; /* для большинства современных браузеров */
+        -webkit-user-select: none; /* для браузеров на движке WebKit (Safari) */
+        -ms-user-select: none; /* для Internet Explorer и Edge */
+    
+}
+
+canvas {
+    margin: 0 auto;
+    border: 1px solid black;
+}

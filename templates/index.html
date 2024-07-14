@@ -1,47 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobile App</title>
-    <link rel="stylesheet" href="../reset.css">
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/gilroy-fonts.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    
+    <title>Falling Towers Bot</title>
+    <style>
+      
+    </style>
 </head>
 <body>
-    <!-- Settings -->
-    <div id="settingsOverlay" class="hidden">
-        <div id="settingsWindow">
-            <div id="settingsTitle">Settings</div>
-            <ol>
-                <li>Set 1</li>
-                <li>Set 2</li>
-                <li>Set 3</li>
-            </ol>           
-            <button id="settingsCloseButton">Back</button>
-        </div>
-    </div>
-    <!-- Page -->
-    <div id="app">
-        <header>
-            <div class="header-content">
-                <div class="coins">NOW COINS: <span id="coin"></span></div>
-                <div id="settingsButton" class="settings-icon">⚙️</div>
+    <div class="container">
+        <div class="header-bar">
+            <div class="energy-container">
+                <img class="energy-icon" src="../static/images/Icons/light.svg" alt="Energy: ">
+                <div id="energy-balance">234</div>
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                </div>
+
+                <div class="contract-info">(+1 in 00:30)</div>
             </div>
-        </header>
-        <main id="main-content">
-            <!-- Content will be loaded here dynamically -->
+
+            <img src="../static/images/Icons/setting.svg" alt="Settings" class="settings-icon" />
+        </div>
+        
+        <div class="claim-section">
+            <div class="claim-info">
+                <div class="claim-balance">
+                <span id="profit">234 000</span> <span> BC</span>
+                </div>
+                <span class="hour-info">(345 BC/hour)</span>
+            </div>
+        
+            
+            <button class="claim-btn">Claim</button>
+        </div>
+        
+        <div class="balance">
+            <h2>1 234 420 323 BC</h2>
+        </div>
+       
+        <main class="main-content">
+            {% if tab == 'city' %}
+            {% include 'city.html' %}
+
+            {% elif tab == 'ranking' %}
+            {% include 'ranking.html' %}
+
+            {% elif tab == 'friends' %}
+            {% include 'friends.html' %}
+
+            {% elif tab == 'tasks' %}
+            {% include 'tasks.html' %}
+
+            {% elif tab == 'upgrade' %}
+            {% include 'upgrade.html' %}
+            
+            {% endif %}
+            
         </main>
-        <div class="spacer"></div>
-        <!-- Navigation -->
-        <nav class="bot-nav">
-            <button id="upgrade-btn" class="nav-btn">upgrade</button>
-            <button id="fren-btn" class="nav-btn">fren</button>
-            <button id="build-btn" class="nav-btn active">build</button>
-            <button id="task-btn" class="nav-btn">task</button>
-            <button id="rank-btn" class="nav-btn">rank</button>
-        </nav>
+
+        <footer class="footer-menu">
+            <a href="/ranking"><img src="../static/images/Icons/ui/rank.svg"  /><span>Ranking</span></a>
+            <a href="/friends"><img src="../static/images/Icons/ui/friends.svg"  /><span>Friends</span></a>
+            <a href="/city" class="active"><img src="../static/images/Icons/ui/city.svg"  /><span>City</span></a>
+            <a href="/tasks"><img src="../static/images/Icons/ui/tasks.svg"  /><span>Task</span></a>
+            <a href="/upgrade"><img src="../static/images/Icons/ui/upgrade.svg"  /><span>Upgrade</span></a>
+        </footer>
     </div>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>    
-    <script type="module" src="../js/main.js"></script>
+
+    <script > 
+        document.addEventListener('DOMContentLoaded', () => {
+    const gridItems = document.querySelectorAll('.grid-item');
+
+    gridItems.forEach(item => {
+        item.addEventListener('click', () => {
+            // Check if the item already has an image
+            if (!item.querySelector('img')) {
+                const img = document.createElement('img');
+                img.src = src="../static/images/h2.png"; // Replace with your image URL
+                item.appendChild(img);
+            }
+        });
+    });
+});
+
+    </script>
 </body>
 </html>

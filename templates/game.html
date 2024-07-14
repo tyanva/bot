@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Canvas Game</title>
+    <script src="https://unpkg.com/konva@9.3.13/konva.min.js"></script>
+    <script src="https://unpkg.com/gifler@0.1.0/gifler.min.js"></script>
+    
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='game/css/reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='game/css/style.css') }}">
+    
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        #canvasContainer {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        #gameCanvas {
+            border: none;
+            background-color: rgb(255, 255, 255);
+        }
+        #overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        #menuBlock {
+            width: 60%;
+            height: 30%;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        #toggleButton {
+            position: absolute;
+            display: block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #toggleButton:hover {
+            background-color: #0056b3;
+        }
+
+        #gameOver {
+            display: none;
+        }
+    </style>
+
+
+</head>
+<body>
+    <div id="canvasContainer">
+        <canvas id="gameCanvas"></canvas>
+        <div id="overlay">
+
+            <div id="menuBlock">
+                <h2>Pause</h2>
+                <div>
+                    <a href="/city">City</a>
+                </div>
+                <button id="backGame-btn"> back</button>
+            </div>
+            
+            <div id="gameOver">
+                <button>Next</button>
+            </div>
+
+
+        </div>
+        <button id="toggleButton">Menu</button>
+    </div>
+
+    
+    <script type="module" src="{{ url_for('static', filename='game/js/main.js') }}"></script>
+</body>
+</html>

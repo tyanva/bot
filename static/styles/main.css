@@ -1,0 +1,279 @@
+:root {
+    --blue-color: #045AFF;
+    --light-color: #EFCB0C;
+    --background-color: #12172C;
+    --wrapping-color: #2E3245;  /**/
+    --text-color: #DCDCDC;
+    --btn-text-color: #FFFFFF;
+
+  }
+  
+  body {
+    margin: 0;
+    font-family: Poppins;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+}
+.container {
+    width: 100%;
+    max-width: 375px; /* фиксированная ширина для мобильного */
+    height: 100vh;
+    padding:0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background-color: var(--background-color);
+}
+/* HEADER BAR */
+.header-bar {
+    font-family: Poppins;
+    font-weight: 500;
+    height: 24px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+.energy-container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+    padding-right: 10%;
+}
+
+#energy-balance {
+    font-size: 14px;
+    }
+
+.contract-info {
+    font-size: 10px;
+}
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #ffffff;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+.progress {
+    height: 100%;
+    background-color: var(--blue-color);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%; /* ширина прогресса может меняться */
+}
+.settings-icon, .energy-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* CLAIM BAR */
+
+.claim-section {    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    border-radius: 32px;
+    background-color: var(--wrapping-color);
+}
+.claim-info {
+    height: 24px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.claim-balance {
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 16px;
+}
+.hour-info {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 12px;
+}
+.claim-btn {
+    font-family: Poppins;
+    width: 75px;
+    height: 32px;
+    font-style: 14px;
+    font-weight: 600;
+    border-radius: 24px;
+    border: none;
+    background-color: var(--blue-color);
+    color: var(--btn-text-color);
+}
+
+/* BALANCE */
+.balance {
+    font-family: Poppins;
+    font-weight: 600;
+    height: 48px;
+    font-size: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* NEWS */
+
+.news {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--wrapping-color);
+    border-radius: 8px;
+    padding: 8px 16px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    color: var(--text-color);
+ 
+}
+.news-icon {
+    height: 40px;
+    width: 40px;
+}
+.news-title{
+    font-family: Poppins;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 21px;
+}
+.news-sub-title {
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+}
+.arrow {
+    margin-left: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-menu {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    }
+.footer-menu a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 60px;
+    border-radius: 4px;
+    color: var(--btn-text-color);
+    text-decoration: none;
+    text-align: center;
+    line-height: 14px;
+    font-size: 12px;
+    font-weight: 400;
+    font-family: Gilroy;
+
+}
+.footer-menu img {
+    width: 24px;
+    height: 24px;
+}
+
+.footer-menu a {
+    line-height: 14px;
+    font-size: 12px;
+    font-weight: 400;
+    font-family: Gilroy;
+}
+.footer-menu .active {
+    
+    font-weight: 600;
+    background-color: var(--wrapping-color);
+}
+
+
+
+/**/
+
+canvas {
+    width: 100%;
+    height: auto;
+    border: none;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.popup-content button {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+}
+
+.popup-content p {
+    margin: 0;
+    padding: 10px 0;
+}
+
+/* MAIN CONTENT - FLASK */ 
+.main-content {
+    position: relative;
+    flex: 1;
+    overflow-y: auto;
+    -ms-overflow-style: none;  /* Убирает прокрутку в IE и Edge */
+    scrollbar-width: none;  /* Убирает прокрутку в Firefox */
+
+}
+.main-content::-webkit-scrollbar {
+    display: none;  /* Убирает прокрутку в Chrome, Safari и Opera */
+}
+
+/* CITY */
+/* CITY CONTAINER*/
+
+.city-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+/* BUILD BTN*/
+
+.build-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    
+    height: 40px;
+    padding: 12px 0;
+    width: 100%;
+    max-width: 184px;
+    border: none;
+    border-radius: 24px;
+    background-color: var(--blue-color);
+    
+    color: var(--btn-text-color);
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 14px;
+    }
