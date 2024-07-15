@@ -49,7 +49,7 @@ canvas.height = window.innerHeight;
 
 const gameWidth = window.innerWidth;
 const gameHeight = window.innerHeight;
-const specialRow = 2;   // Донат поля
+const specialRow = 1;   // Донат поля
 
 const cellSize = gameWidth/8;
 const roadSize = cellSize / 4;
