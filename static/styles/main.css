@@ -213,33 +213,11 @@
 
 canvas {
     margin: 0 auto;
-    width: 80%;
+    width: 100%;
     height: auto;
     border: none;
 }
 
-.popup {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-.popup-content button {
-    display: block;
-    margin: 10px 0;
-    padding: 10px;
-    width: 100%;
-}
-
-.popup-content p {
-    margin: 0;
-    padding: 10px 0;
-}
 
 /* MAIN CONTENT - FLASK */ 
 .main-content {
@@ -267,7 +245,7 @@ canvas {
 
 /* BUILD BTN*/
 
-.build-btn {
+#build-btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -284,3 +262,33 @@ canvas {
     font-weight: 600;
     font-size: 14px;
     }
+
+
+/* MENU CONTEINER */
+.menu-conteiner {
+
+    background-color: var(--wrapping-color);
+    border-radius: 16px;
+    min-height: 450px;
+    max-width: 300px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* CONTRACT MENU */
+
+#contract-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 100vh;
+    width: 100vh;
+    background-color: #5a4d178a;  
+}
+

@@ -85,9 +85,9 @@
             {% endif %}
 
         <footer class="footer-menu">
-            <a href="/ranking"><img src="../static/images/Icons/ui/rank.svg"  /><span>Ranking</span></a>
+            <a id="" href="/ranking"><img src="../static/images/Icons/ui/rank.svg"  /><span>Ranking</span></a>
             <a href="/friends"><img src="../static/images/Icons/ui/friends.svg"  /><span>Friends</span></a>
-            <a href="/city" class="active"><img src="../static/images/Icons/ui/city.svg"  /><span>City</span></a>
+            <a href="/city" ><img src="../static/images/Icons/ui/city.svg"  /><span>City</span></a>
             <a href="/tasks"><img src="../static/images/Icons/ui/tasks.svg"  /><span>Task</span></a>
             <a href="/upgrade"><img src="../static/images/Icons/ui/upgrade.svg"  /><span>Upgrade</span></a>
         </footer>
@@ -109,6 +109,21 @@
     });
 });
 
-    </script>
+document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('.footer-menu a');
+            const currentPath = window.location.pathname;
+
+            links.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                }
+                
+                // Добавление id на основе href
+                const hrefValue = link.getAttribute('href').substring(1); // Удаление начального "/"
+                link.setAttribute('id', hrefValue);
+            });
+        });
+</script>
+
 </body>
 </html>

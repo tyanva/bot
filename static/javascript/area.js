@@ -1,4 +1,6 @@
-const canvas = document.getElementById('gameCanvas');
+
+
+const canvas = document.getElementById('cityCanvas');
 const ctx = canvas.getContext('2d');
 
 const cellImage = new Image();
@@ -8,7 +10,7 @@ const roadVerticalImage = new Image();
 const intersectionImage = new Image();
 
 cellImage.src = '../static/images/cell.png';
-buildingImage.src = '../static/images/building.png';
+buildingImage.src = '../static/images/h2.png';
 roadHorizontalImage.src = '../static/images/road-horizontal.png';
 roadVerticalImage.src = '../static/images/road-vertical.png';
 intersectionImage.src = '../static/images/q.png';
@@ -42,13 +44,18 @@ roadVerticalImage.onerror = () => imageLoadError(roadVerticalImage.src);
 intersectionImage.onload = imageLoaded;
 intersectionImage.onerror = () => imageLoadError(intersectionImage.src);
 
-const gameWidth = canvas.width;
-const gameHeight = canvas.height;
+canvas.width =  window.innerWidth;
+canvas.height = window.innerHeight;
+
+const gameWidth = window.innerWidth;
+const gameHeight = window.innerHeight;
 const specialRow = 2;   // Донат поля
 
-const cellSize = gameWidth/9;
-const roadSize = cellSize /4;
+const cellSize = gameWidth/8;
+const roadSize = cellSize / 4;
 const totalCellSize = cellSize + roadSize; // размер тайла + дороги
+
+
 // Габориты поля
 const gridCol = 5; 
 const gridRow = 5 + specialRow; 
@@ -89,21 +96,23 @@ fetch('/api/coordinates', {
 // Call the function to send coordinates
 sendCoordinatesToBackend(buildingCoordinates);
 */
-
 canvas.width = totalCellSize * gridCol - roadSize;
 canvas.height = totalCellSize * gridRow - roadSize;
 
+
 //Добавить новое здание
-function createBuild(build,x,y) {
+function createBuild(build,x,y,img) {
+    img = buildingImage;
     const item = {
         id:x*gridCol + y,     //Max 25 + 10
         x:x,
         y:y,
-        skin:'',
-        sell_price:233,
-        profit:122,
+        skin: new Image(),
+        sell_price:300,
+        profit:125,
         text:'text',        
     }
+    item.skin = img;
     build.push(item);
     //build.id = build.x * gridCol + build.y; // ID - номер блока 
 }
@@ -111,6 +120,7 @@ createBuild(buildings,0,2)
 createBuild(buildings,3,1)
 createBuild(buildings,1,1)
 createBuild(buildings,0,0)
+
 
 //разбор json 
 function getCoordinates(array) {
@@ -135,7 +145,8 @@ const drawGrid = () => {
             const x = col * totalCellSize;
             const y = row * totalCellSize;
             ctx.drawImage(cellImage, x, y, cellSize, cellSize);
-            console.log("Cell-",t++,";  X - ", x, "; Y - ", y,";")
+            //console.log("Cell-",t++,";  X - ", x, "; Y - ", y,";")
+
 
             // Рисуем горизонтальные дороги
             if (col < gridCol - 1) {
@@ -153,96 +164,16 @@ const drawGrid = () => {
             }
         }
     }
+
     buildings.forEach(building => {
-        const x = building.col * totalCellSize;
-        const y = building.row * totalCellSize;
-        ctx.drawImage(buildingImage, x, y, cellSize, cellSize);
+        const x = building.x * totalCellSize;
+        const y = building.y * totalCellSize;
+        console.log("Cell-","t++",";  X - ", x, "; Y - ", y,";")
+
+        ctx.drawImage(building.skin, x, y, cellSize, cellSize);
+
     });
 };
-
-const highlightCell = (col, row) => {
-    const x = col * totalCellSize;
-    const y = row * totalCellSize;
-    ctx.fillStyle = 'rgba(0, 0, 255, 0.3)';
-    ctx.fillRect(x, y, cellSize, cellSize);
-};
-
-canvas.addEventListener('mousemove', (e) => {
-    if (imagesLoaded === totalImages) {
-        drawGrid();
-        const rect = canvas.getBoundingClientRect();
-        const scaleX = canvas.width / rect.width;
-        const scaleY = canvas.height / rect.height;
-        console.log(scaleX+" - "+scaleY)
-        const x = (e.clientX - rect.left) * scaleX;
-        const y = (e.clientY - rect.top) * scaleY;
-        const col = Math.floor(x / totalCellSize);
-        const row = Math.floor(y / totalCellSize);
-
-        highlightCell(col, row);
-    }
-});
-
-canvas.addEventListener('mouseleave', () => {
-    if (imagesLoaded === totalImages) {
-        drawGrid();
-    }
-});
-
-canvas.addEventListener('click', (e) => {
-    if (imagesLoaded === totalImages) {
-        const rect = canvas.getBoundingClientRect(); //коор курсора
-        const scaleX = canvas.width / rect.width;
-        const scaleY = canvas.height / rect.height;
-        const x = (e.clientX - rect.left) * scaleX;
-        const y = (e.clientY - rect.top) * scaleY;
-        const col = Math.floor(x / totalCellSize);
-        const row = Math.floor(y / totalCellSize);
-        console.log(rect.width)
-
-        const existingBuilding = buildings.find(building => building.col === col && building.row === row);
-        const popup = document.getElementById('popup');
-
-        if (existingBuilding) {
-            popup.style.display = 'block';
-            document.getElementById('buildButton').style.display = 'none';
-            document.getElementById('freeButton').style.display = 'none';
-            document.getElementById('sellButton').style.display = 'block';
-
-            const sellButton = document.getElementById('sellButton');
-            sellButton.onclick = () => {
-                buildings.splice(buildings.indexOf(existingBuilding), 1);
-                drawGrid();
-                popup.style.display = 'none';
-            };
-        } else {
-            popup.style.display = 'block';
-            document.getElementById('buildButton').style.display = 'block';
-            document.getElementById('freeButton').style.display = 'block';
-            document.getElementById('sellButton').style.display = 'none';
-
-            const buildButton = document.getElementById('buildButton');
-            buildButton.onclick = () => {
-                window.location.href = './game.html';
-            };
-
-            const freeButton = document.getElementById('freeButton');
-            freeButton.onclick = () => {
-                buildings.push({ col, row });
-                drawGrid();
-                popup.style.display = 'none';
-            };
-        }
-    }
-});
-
-// Close popup on outside click
-window.addEventListener('click', (e) => {
-    const popup = document.getElementById('popup');
-    if (e.target == popup) {
-        popup.style.display = 'none';
-    }
-});
 
 // координаты курсора
 document.addEventListener('DOMContentLoaded', (event) => {

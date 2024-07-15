@@ -12,7 +12,7 @@ export const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
 // Устанавливаем размер canvas
-canvas.width = 0.6 * window.innerHeight;
+canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 const background = createBackground(canvas); // Создание rope/hook
@@ -81,7 +81,6 @@ addBlock(blocks);
         if (deltaTime > interval) {
             // Сохраняем текущее время для следующего кадра
             lastTime = time - (deltaTime % interval);
-            console.log((deltaTime % interval))
             
             if(!isMenuVisible)
             update();
@@ -164,7 +163,17 @@ function update() {
     }
 
     if( hearts<=0)
-        console.log("F")
+    {
+    isMenuVisible = !isMenuVisible;
+        //Seve data and show score
+
+        
+    }
+    if(floors>=consts.contract_size) {
+    isMenuVisible = !isMenuVisible;
+
+        window.location.href = `/city`;
+    }
     
     // Rendering
     renderBackground(canvas, background);

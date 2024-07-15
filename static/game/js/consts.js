@@ -13,11 +13,20 @@ export var wind_mod = 1.0;
 export var rope_speed_mod = 1.0;
 export var rope_l_mod = 1.0;
 
+
+function getUrlParameter(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
+// Получение contractId из URL
+const contractId = getUrlParameter('contract');
+
+
 //Global 
 export var fps = 60;                    //
 export var headers = 3;                 //
-export const contract_size = 20;        // Макс ысота постройки
-export const start_shaking = 0;        // Макс ысота постройки
+export const contract_size = contractId;// Макс ысота постройки
+export const start_shaking = 0;         // Макс ысота постройки
 
 //UI
 export var textSize = 0.5;
