@@ -33,7 +33,7 @@ export var textSize = 0.5;
 
 //block
 export var block_limit = 4;
-export var block_w = (window.innerHeight/8)*0.9;
+export var block_w = (window.innerHeight/8)*0.8;
 export var block_h = (window.innerHeight/8);
 export var block_speed = 8;
 export var block_angle = 0;                             // начальный угол
@@ -48,7 +48,7 @@ export var movingDownSpeedGround = block_h / fps * coefMovingBG  ; // скоро
 
 //background
 export var movingDownSpeedBg = block_h / fps * coefMovingBG  ; // скорость движения фона
-export var backgroundDelta = block_h/2; //высот сдвига фон
+export var backgroundDelta = block_h; //высот сдвига фон
 
 
 //rope
