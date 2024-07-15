@@ -165,13 +165,13 @@ function update() {
     if( hearts<=0)
     {
     isMenuVisible = !isMenuVisible;
+    window.location.href = `/city`;
         //Seve data and show score
 
-        
     }
     if(floors>=consts.contract_size) {
     isMenuVisible = !isMenuVisible;
-
+    //окно счета
         window.location.href = `/city`;
     }
     
