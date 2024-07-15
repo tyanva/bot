@@ -126,7 +126,6 @@
 /* NEWS */
 
 .news {
-
     background-color: var(--wrapping-color);
     border-radius: 8px;
     padding: 8px 16px;
@@ -172,7 +171,6 @@
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 8px;
-    background-color: var(--background-color);
     border-radius: 8px;
     }
 .footer-menu a {
@@ -214,7 +212,8 @@
 /**/
 
 canvas {
-    width: 100%;
+    margin: 0 auto;
+    width: 80%;
     height: auto;
     border: none;
 }
@@ -262,6 +261,7 @@ canvas {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
     gap: 16px;
 }
 
@@ -271,10 +271,8 @@ canvas {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto;
-    
+    text-decoration: none;
     height: 40px;
-    padding: 12px 0;
     width: 100%;
     max-width: 184px;
     border: none;
