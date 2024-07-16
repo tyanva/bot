@@ -4,7 +4,7 @@ export const crash_animation_src =      'static/game/img/crash_animation.gif'
 export const falling_animation_src =    'static/game/img/falling_animation.gif'
 export const ground_block_src =         'static/game/img/beton.png'
 export const hook_skin_src =            'static/game/img/hook.png'
-export const background_src =           'static/game/img/long_bg.png'
+export const background_src =           'static/game/img/background.png'
 export const timer_src =                'static/game/img/timer.svg'
 
 // Сервер присылает переменные в зависимости от улчшений

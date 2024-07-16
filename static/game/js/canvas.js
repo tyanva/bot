@@ -37,7 +37,7 @@ export function renderRope(context, rope) {
 
 // Функция для отрисовки hook
 export function renderHook(context, hook){
-    const hook_w = 80;
+    const hook_w = 60;
     const hook_h = 50;
 
     context.drawImage(hook.skin_src,hook.endX-25, hook.endY, hook_h, hook_w);

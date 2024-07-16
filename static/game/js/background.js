@@ -6,7 +6,7 @@ export function createBackground(canvas) {
         x: 0, 
         y: 0, 
         w: canvas.width, 
-        h: consts.block_h*consts.contract_size+consts.block_h*4,          
+        h: consts.block_h*consts.contract_size+consts.block_h*3,          
         skin_src:   new Image(),
         moving: false,
         oldPos: 0,
@@ -24,7 +24,8 @@ export function createBackground(canvas) {
             }
         },
     };
-
+    bg.w = bg.h*0.3;
+    
     bg.y = -bg.h + canvas.height;
     bg.skin_src.src = consts.background_src;
 
