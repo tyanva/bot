@@ -25,7 +25,10 @@ export function createBackground(canvas) {
         },
     };
     bg.w = bg.h*0.3;
-    
+    if(bg.w>canvas.width)
+    {
+        bg.x = -(bg.w-canvas.width)/2
+    } 
     bg.y = -bg.h + canvas.height;
     bg.skin_src.src = consts.background_src;
 
