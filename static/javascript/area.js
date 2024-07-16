@@ -1,5 +1,3 @@
-
-
 const canvas = document.getElementById('cityCanvas');
 const ctx = canvas.getContext('2d');
 
@@ -44,162 +42,202 @@ roadVerticalImage.onerror = () => imageLoadError(roadVerticalImage.src);
 intersectionImage.onload = imageLoaded;
 intersectionImage.onerror = () => imageLoadError(intersectionImage.src);
 
-canvas.width =  window.innerWidth;
+canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 const gameWidth = window.innerWidth;
 const gameHeight = window.innerHeight;
-const specialRow = 1;   // Донат поля
+let buildMode = true; // режим стройки
+const specialRow = 1; // Донат поля
 
-const cellSize = gameWidth/8;
+const cellSize = gameWidth / 8;
 const roadSize = cellSize / 4;
 const totalCellSize = cellSize + roadSize; // размер тайла + дороги
 
-
-// Габориты поля
-const gridCol = 5; 
-const gridRow = 5 + specialRow; 
+// Габариты поля
+const gridCol = 5;
+const gridRow = 5 + specialRow;
 var buildings = []; // Массив домов
-/*
-// Отправка данных по строениям на сервер
-
-const buildingCoordinates = [
-    { id: 1, x: 100, y: 200 },
-    { id: 2, x: 300, y: 400 },
-    // Add more coordinates as needed
-];
-
-function sendCoordinatesToBackend(allBuildingsData) {
-    
-let buildingsData = [];
-allBuildingsData.forEach(item => {
-    buildingsData.push({ x: 100, y: 200 })
-});
-
-
-fetch('/api/coordinates', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ buildingsData: buildingsData }),
-})
-.then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
-}
-
-// Call the function to send coordinates
-sendCoordinatesToBackend(buildingCoordinates);
-*/
 canvas.width = totalCellSize * gridCol - roadSize;
 canvas.height = totalCellSize * gridRow - roadSize;
 
-
-//Добавить новое здание
-function createBuild(build,x,y,img) {
+// Добавить новое здание
+function createBuild(build, x, y, lvl) {
+    
     img = buildingImage;
     const item = {
-        id:x*gridCol + y,     //Max 25 + 10
-        x:x,
-        y:y,
+        id: x + y*gridCol, // Max 25 + 10
+        x: x,
+        y: y,
+        lvl: lvl,
         skin: new Image(),
-        sell_price:300,
-        profit:125,
-        text:'text',        
+        sell_price: 300,
+        profit: 125,
+        text: 'text',
     }
     item.skin = img;
     build.push(item);
-    //build.id = build.x * gridCol + build.y; // ID - номер блока 
 }
-createBuild(buildings,0,2)
-createBuild(buildings,3,1)
-createBuild(buildings,1,1)
-createBuild(buildings,0,0)
+createBuild(buildings, 0, 2, 1)
+createBuild(buildings, 3, 1, 1)
+createBuild(buildings, 1, 1, 2)
+createBuild(buildings, 0, 0, 3)
 
+function getMaxLevelColor(maxLevel) {
+    switch (maxLevel) {
+        case 1:
+            return 'rgba(0, 255, 0, 0.5)'; // зеленый с полупрозрачностью
+        case 2:
+            return 'rgba(255, 255, 0, 0.5)'; // желтый с полупрозрачностью
+        case 3:
+            return 'rgba(255, 0, 0, 0.5)'; // красный с полупрозрачностью
+        case 4:
+            return 'rgba(0, 0, 255, 0.5)'; // синий с полупрозрачностью
+        default:
+            return 'rgba(255, 255, 255, 0)'; // прозрачный, если уровень не определен
+    }
+}
+const freeCells = getFreeCells();
+const freeCellsWithMaxLevels = checkMaxBuildingLevel(freeCells);
 
-//разбор json 
-function getCoordinates(array) {
-    const coordinates = [];
-    array.forEach(value => {
-      if (value.id >= gridCol * gridRow) {
-        console.log(`Значение ${value} выходит за пределы сетки`);
-        return;
-      }
-      const x = value.id % gridCol;
-      const y = Math.floor(value.id / gridCol);
-      coordinates.push({ x:x, y:y });
-    });
-    return coordinates;
-  }
+function drawGrid() {
 
-const drawGrid = () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    for (let row = 0, t=0; row < gridRow; row++) {
+    for (let row = 0; row < gridRow; row++) {
         for (let col = 0; col < gridCol; col++) {
             const x = col * totalCellSize;
             const y = row * totalCellSize;
-            ctx.drawImage(cellImage, x, y, cellSize, cellSize);
-            //console.log("Cell-",t++,";  X - ", x, "; Y - ", y,";")
 
-
-            // Рисуем горизонтальные дороги
+            // Рисуем дорогу
             if (col < gridCol - 1) {
                 ctx.drawImage(roadHorizontalImage, x + cellSize, y, roadSize, cellSize);
             }
-
-            // Рисуем вертикальные дороги
             if (row < gridRow - 1) {
                 ctx.drawImage(roadVerticalImage, x, y + cellSize, cellSize, roadSize);
             }
-
-            // Рисуем перекрестки
             if (col < gridCol - 1 && row < gridRow - 1) {
                 ctx.drawImage(intersectionImage, x + cellSize, y + cellSize, roadSize, roadSize);
+            }
+
+            // Рисуем клетку
+            ctx.drawImage(cellImage, x, y, cellSize, cellSize);
+
+            // Проверяем, если эта ячейка свободна, и красим её
+            const freeCell = freeCellsWithMaxLevels.find(cell => cell.x === col && cell.y === row);
+            if (freeCell) {
+                ctx.fillStyle = getMaxLevelColor(freeCell.maxLevel);
+                ctx.fillRect(x, y, cellSize, cellSize);
             }
         }
     }
 
-    buildings.forEach(building => {
+    // Рисуем здания
+    for (let i = 0; i < buildings.length; i++) {
+        const building = buildings[i];
         const x = building.x * totalCellSize;
         const y = building.y * totalCellSize;
-        console.log("Cell-","t++",";  X - ", x, "; Y - ", y,";")
-
+        // draw color - 
+        ctx.fillStyle = getMaxLevelColor(building.lvl);
+        ctx.fillRect(x, y, cellSize, cellSize);
+        // -
         ctx.drawImage(building.skin, x, y, cellSize, cellSize);
+    }
+}
 
-    });
-};
+// Обновленный вызов функции drawGrid() при загрузке изображений
+drawGrid();
 
-// координаты курсора
-document.addEventListener('DOMContentLoaded', (event) => {
+function getFreeCells() {
+    const freeCells = [];
 
+    for (let row = 0; row < gridRow; row++) {
+        for (let col = 0; col < gridCol; col++) {
+            let isOccupied = false;
 
-    // Функция для очистки канваса
-    function clearCanvas() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < buildings.length; i++) {
+                const building = buildings[i];
+                if (building.x === col && building.y === row) {
+                    isOccupied = true;
+                    break;
+                }
+            }
+
+            if (!isOccupied) {
+                freeCells.push({ x: col, y: row });
+            }
+        }
     }
 
-    // Функция для рисования координат
-    function drawCoordinates(x, y) {
-        drawGrid()
-        
-        ctx.font = '20px Arial';
-        ctx.fillStyle = 'black';
-        ctx.fillText(`X: ${Math.floor(x)}, Y: ${Math.floor(y)}`, 10, 30);
+    return freeCells;
+}
 
-    }
+var availableContracts = 0;
 
-    // Обработчик события движения мыши
-    canvas.addEventListener('click', (event) => {
-        clearCanvas();
-        const rect = canvas.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-        drawCoordinates(x, y);
+// Функция для проверки соседей и определения максимального уровня здания
+function checkMaxBuildingLevel(freeCells) {
+    const directions = [
+        { dx: 0, dy: -1 }, // вверх
+        { dx: 0, dy: 1 },  // вниз
+        { dx: -1, dy: 0 }, // влево
+        { dx: 1, dy: 0 }   // вправо
+    ];
+
+    freeCells.forEach(cell => {
+        let maxLevel = 1;
+        let hasLevel1 = false;
+        let hasLevel2 = false;
+        let hasLevel3 = false;
+
+        directions.forEach(dir => {
+            const neighborX = cell.x + dir.dx;
+            const neighborY = cell.y + dir.dy;
+
+            if (neighborX >= 0 && neighborX < gridCol && neighborY >= 0 && neighborY < gridRow) {
+                buildings.forEach(building => {
+                    if (building.x === neighborX && building.y === neighborY) {
+                        if (building.lvl === 1) hasLevel1 = true;
+                        if (building.lvl === 2) hasLevel2 = true;
+                        if (building.lvl === 3) hasLevel3 = true;
+                    }
+                });
+            }
+        });
+
+        if (hasLevel1) maxLevel = 2;
+        if (hasLevel1 && hasLevel2) maxLevel = 3;
+        if (hasLevel1 && hasLevel2 && hasLevel3) maxLevel = 4;
+
+        cell.maxLevel = maxLevel;
+        availableContracts += 1; // Увеличиваем количество доступных контрактов
     });
-});
+
+    return freeCells;
+}
+
+
+console.log('Свободные ячейки с максимальным уровнем зданий:', freeCellsWithMaxLevels);
+console.log('Количество доступных контрактов:', availableContracts);
+
+
+
+/*
+При выборе контр, надо проверить, максимальный ранг, 
+если все ок, то списываем контракт при клике гейм и старт
+
+// типа после игры
+Сперва получим форму json? с результатом
+
+вызовем чет для сообщения, что можно ткнуть дом
+далее проверяем, какая ячейка подходит под наш контракт
+
+Тыкаем по доступной ячейке и пушис параметрами. Когда скин ?
+
+по курсору , если он попал клетку, уровень которой подходит
+        x: x,
+        y: y,
+        lvl: lvl,
+        skin: new Image(),
+        sell_price: 300,
+        profit: 125,
+        text: 'text',
+
+ */
