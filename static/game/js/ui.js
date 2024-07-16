@@ -41,7 +41,6 @@ export function drawHearts(canvas, ctxui, hp) {
 }
 // Hearts
 export function drawPerf(canvas, ctxui, isPerf) {
-    
         const text = isPerf;
         ctxui.save();
         ctxui.font = '80px Arial';
